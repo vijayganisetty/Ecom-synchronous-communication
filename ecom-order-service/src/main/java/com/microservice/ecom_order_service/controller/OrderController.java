@@ -14,7 +14,7 @@ public class OrderController {
     }
 
     @PostMapping("/{productId}")
-    public String placeOrder(@PathVariable String productId){
+    public String placeOrder(@PathVariable long productId){
         return orderService.placeOrder(productId);
     }
 }
