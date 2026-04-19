@@ -1,27 +1,30 @@
 package com.microservice.ecom_inventory_service.service;
 
-import jakarta.annotation.PostConstruct;
+import com.microservice.ecom_inventory_service.model.Inventory;
+import com.microservice.ecom_inventory_service.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class InventoryService {
 
-    private  Map<String, Integer> inventory;
+    private final InventoryRepository inventoryRepository;
 
-    @PostConstruct
-    public void populate() {
-        inventory = new HashMap<>();
-        inventory.put("1001",2);
+    public InventoryService(InventoryRepository inventoryRepository) {
+        this.inventoryRepository = inventoryRepository;
     }
 
-    public boolean checkInventory(String productId){
-        if(inventory.containsKey(productId) && inventory.get(productId)>0){
-            inventory.replace(productId, inventory.get(productId)-1);
-            return true;
-        }
-        return false;
+    public String checkInventory(long productId){
+
+       Inventory inv =  inventoryRepository.findById(productId).orElse(null);
+       if(null !=inv && inv.getQuantity()>0){
+           inv.setQuantity(inv.getQuantity()-1);
+           inventoryRepository.save(inv);
+           return "IN STOCK";
+       }
+        return "OUT OF STOCK";
+    }
+
+    public  Inventory addProduct(Inventory inventory){
+      return inventoryRepository.save(inventory);
     }
 }
