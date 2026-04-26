@@ -27,4 +27,9 @@ public class InventoryController {
       return inventoryService.checkInventory(productId);
     }
 
+    @PostMapping("/{productId}")
+    public String placeOrder(@PathVariable long productId){
+        return inventoryService.placeOrder(productId);
+    }
+
 }
