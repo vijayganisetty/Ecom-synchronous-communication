@@ -17,8 +17,6 @@ public class InventoryService {
 
        Inventory inv =  inventoryRepository.findById(productId).orElse(null);
        if(null !=inv && inv.getQuantity()>0){
-           inv.setQuantity(inv.getQuantity()-1);
-           inventoryRepository.save(inv);
            return "IN STOCK";
        }
         return "OUT OF STOCK";
@@ -27,4 +25,17 @@ public class InventoryService {
     public  Inventory addProduct(Inventory inventory){
       return inventoryRepository.save(inventory);
     }
+
+    public String placeOrder(long productId){
+
+        Inventory inv =  inventoryRepository.findById(productId).orElse(null);
+        if(null !=inv && inv.getQuantity()>0){
+            inv.setQuantity(inv.getQuantity()-1);
+            inventoryRepository.save(inv);
+            return "IN STOCK";
+        }
+        return "OUT OF STOCK";
+    }
+
+
 }
