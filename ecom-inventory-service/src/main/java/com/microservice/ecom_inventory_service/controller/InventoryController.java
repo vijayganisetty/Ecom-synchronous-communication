@@ -28,7 +28,8 @@ public class InventoryController {
     }
 
     @PostMapping("/{productId}")
-    public String placeOrder(@PathVariable long productId){
+    public String placeOrder(@PathVariable long productId) throws InterruptedException {
+        Thread.sleep(15000);
         return inventoryService.placeOrder(productId);
     }
 
