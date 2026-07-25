@@ -24,7 +24,8 @@ public class InventoryController {
 
     @GetMapping("/{productId}")
     public String checkInventory(@PathVariable long productId){
-      return inventoryService.checkInventory(productId);
+        // throw  new RuntimeException("Inventory is down");
+         return inventoryService.checkInventory(productId);
     }
 
     @PostMapping("/{productId}")
