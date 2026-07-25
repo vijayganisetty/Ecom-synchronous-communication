@@ -9,3 +9,22 @@ server:
 logging:
   level:
     root: DEBUG
+
+
+resilience4j:
+  ratelimiter:
+    instances:
+      orderService:
+        limit-for-period: 2
+        limit-refresh-period: 10s
+        timeout-duration: 0s
+  circuitbreaker:
+    instances:
+      inventoryServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 6
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
